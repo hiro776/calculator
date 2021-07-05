@@ -1,0 +1,133 @@
+/* Calculator UI Styles */
+
+/* Author: Rohit Mehta */
+
+/* Roboto Mono Bold 700 */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap');
+/* --- */
+
+:root {
+    --body-bg-color: #292d30;
+    --calc-bg-color: #464a4b;
+    --key-color: #393a3e;
+    --btn-calc-shadow: rgba(0, 0, 0, 0.5);
+    --btn-shadow-2: rgba(255, 255, 255, 0.5);
+    --equal-color: #9C2EF3;
+    --ckey-color: #fdb82d;
+    --sp-color: #4b443a;
+    --op-color: #49345d;
+    --font-color: rgb(254,254,254);
+    --op-font-color: #ac77dd;
+    --sp-font-color: #c0ac90;
+    --display-font-color: rgb(233, 233, 233);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    background-color: var(--body-bg-color);
+    font-family: 'Roboto Mono', monospace;
+    font: 18pt;
+}
+
+/* calculator styles */
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: .85rem;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--calc-bg-color);
+    box-shadow: 6px 6px 12px var(--btn-calc-shadow), -10px -10px 30px var(--btn-calc-shadow) inset;
+    border: 1px solid var(--calc-bg-color);
+    border-radius: 30px;
+    height: 660px;
+    width: 95vw;
+    max-width: 400px;
+}
+
+/* calculator display */
+
+.calculator .display {
+    width: 98%;
+    height: 164px;
+    text-align: right;
+    vertical-align:middle;
+    color: var(--display-font-color);
+}
+
+.calculator .display > .previous-result {
+    width: 100%;
+    height: 45px;
+    padding: 1rem 1rem;
+    font-size: 1rem;
+    opacity: 0.5;
+}
+
+.calculator .display > .current-result {
+    width: 100%;
+    height: 119px;
+    padding: 1rem 1rem;
+    font-size: 3rem;
+}
+
+/* keys */
+
+.calculator .keys {
+    display: grid;
+    grid-gap: 16px;
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(64px, 1fr));
+    height: 374px;
+    width: 98%;
+}
+
+.calculator .keys > button {
+    color: var(--font-color);
+    width: 64px;
+    /* height: 49px; */
+    border: 0;
+    border-radius: 30px;
+    box-shadow: 2px 2px var(--btn-calc-shadow), -2px -2px var(--btn-shadow-2);
+}
+
+/* number keys */
+
+.keys > .num {
+    background-color: var(--key-color);
+}
+
+/* clear key */
+.keys > .c {
+    background-color: var(--ckey-color);
+    font-weight: bolder;
+    font-size: 120%;
+}
+
+/* special operations key */
+.keys > button.sp {
+    background-color: var(--sp-color);
+    color: var(--sp-font-color);
+}
+
+/* operations key */
+.keys > button.op {
+    background-color: var(--op-color);
+    color: var(--op-font-color);
+}
+
+/* Equal key */
+
+.keys > .eq {
+    background-color: var(--equal-color);
+    grid-row: 5 / 7;
+    grid-column: 4 / auto;
+    font-weight: bolder;
+    font-size: 180%;
+}

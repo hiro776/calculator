@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="calculator">
+        <div class="display">
+            <div class="previous-result"></div>
+            <div class="current-result">0</div>
+        </div>
+
+        <!-- a 6 by 4 grid -->
+        <div class="keys">
+            <!-- First Row -->
+            <button type="button" class="c" data-key="c">C</button>
+            <button type="button" class="sp" data-key="(">(</button>
+            <button type="button" class="sp" data-key=")">)</button>
+            <button type="button" class="op" data-key="/">&div;</button>
+
+            <!-- Second Row -->
+            <button type="button" class="sp" data-key="sqrt">&Sqrt;</button>
+            <button type="button" class="sp" data-key="square">x<sup>2</sup></button>
+            <button type="button" class="sp" data-key="plusminus">&PlusMinus;</button>
+            <button type="button" class="op" data-key="x">&Cross;</button>
+
+            <!-- Third Row -->
+            <button type="button" class="num" data-key="7">7</button>
+            <button type="button" class="num" data-key="8">8</button>
+            <button type="button" class="num" data-key="9">9</button>
+            <button type="button" class="op" data-key="-">-</button>
+
+            <!-- Forth Row -->
+            <button type="button" class="num" data-key="4">4</button>
+            <button type="button" class="num" data-key="5">5</button>
+            <button type="button" class="num" data-key="6">6</button>
+            <button type="button" class="op" data-key="+">+</button>
+
+            <!-- Fith Row -->
+            <button type="button" class="num" data-key="1">1</button>
+            <button type="button" class="num" data-key="2">2</button>
+            <button type="button" class="num" data-key="3">3</button>
+
+            <!-- sixth row -->
+            <button type="button" class="num" data-key="dot">.</button>
+            <button type="button" class="num" data-key="0">0</button>
+            <button type="button" class="num" data-key="del">Del</button>
+
+            <!-- Equals key -->
+            <button type="button" class="eq" data-key="eq">=</button>
+        </div>
+    </main>
+</body>
+
+</html>
