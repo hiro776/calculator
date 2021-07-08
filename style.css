@@ -93,6 +93,7 @@ body {
     color: var(--font-color);
     width: 64px;
     /* height: 49px; */
+    font-size: 110%;
     border: 0;
     border-radius: 30px;
     box-shadow: 2px 3px 4px var(--btn-calc-shadow), 2px 1px 4px var(--btn-shadow-2) inset;
