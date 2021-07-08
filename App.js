@@ -5,57 +5,126 @@
 //
 
 
-// The point in DOM to display the result of recent operation
-const resultDisplay = document.querySelector('.current-result');
+let numberBuffer = '';  // string that stores the numeric input of user per operation (visible on display)
+let result = 0; // only visible on display when user presses equalKey
+const decimalPrecision = 100000000;
 
-// this shows the operation that resulted in resultDisplay or, the last result (as when user starts new operation(s))
-const previousDisplay = document.querySelector('.previous-result');
+const displayBuffer = function () {
+    const display = document.querySelector('.current-result');
 
-// Assingns the key events to the calculator keys
-// Called by: keys.forEach()
-// Accepts the keys > button from the DOM
-const assignKeys = (key) => {
-    const keyVal = key.target.getAttribute('data-key');
-    switch (keyVal) {
-        case 'c':
-            resultDisplay.textContent = '0';
-            break;
-
-        case 'sqrt':
-            resultDisplay.innerHTML += '&Sqrt;';
-            break;
-
-        case 'square':
-            resultDisplay.textContent += '^2';
-            break;
-
-        case 'plusminus':
-            // probably change this number
-            break;
-
-        case 'del': // delete key
-            resultDisplay.textContent = resultDisplay.textContent.slice(0, resultDisplay.textContent.length - 1);
-            break;
-
-        case 'eq': // equal key
-
-            break;
-
-        case '.':
-            resultDisplay.textContent += keyVal;
-            key.target.removeEventListener('click', assignKeys);
-            break;
-
-        default:
-            console.log(keyVal);
-            resultDisplay.textContent += keyVal;
-            break;
-    }
+    display.textContent = numberBuffer.length === 0 ? '0' : numberBuffer;
 }
 
-// get all the keys on the calculator
-const keys = Array.from(document.querySelectorAll('button[type="button"'));
-// console.table(keys);
-keys.forEach(key => {
-    key.addEventListener('click', assignKeys);
+
+const numKeys = Array.from(document.querySelectorAll('button.num'));
+// console.log(numKeys);
+
+// these are binary operators
+const opKeys = Array.from(document.querySelectorAll('button.op'));
+// console.log(opKeys);
+
+// these are the uninary operators
+const spKeys = Array.from(document.querySelectorAll('button.sp'));
+// console.log(spKeys);
+
+const clearKey = document.querySelector('button.c');
+// console.log(clearKey);
+// clear display, reset all buffers and result on clearKey
+clearKey.onclick = function () {
+    numberBuffer = '';
+    result = 0;
+
+    displayBuffer();
+    console.log('Cleared');
+}
+
+const equalKey = document.querySelector('button.eq');
+// console.log(equalKey);
+
+
+numKeys.forEach(key => {
+    key.addEventListener('click', e => {
+        // console.log(e.target);
+        const keyVal = e.target.getAttribute('data-key');
+
+        if (numberBuffer === result.toString()) {
+            // remove previous operations residue
+            numberBuffer = '';
+        }
+
+        if (keyVal !== 'del' && keyVal !== '.') {
+            numberBuffer += keyVal;
+        }
+
+        if (keyVal === 'del') {
+            numberBuffer = numberBuffer.slice(0, numberBuffer.length - 1);
+        }
+
+        if (keyVal === '.') {
+            if (numberBuffer.indexOf('.') === -1) {
+                numberBuffer += '.';
+            }
+        }
+
+        console.log({ numberBuffer });
+        displayBuffer();
+
+    });
 });
+
+
+spKeys.forEach(key => {
+    key.addEventListener('click', (e) => {
+        const keyVal = e.target.getAttribute('data-key');
+        // console.log('Uninary Operation: ', keyVal);
+
+        if (numberBuffer.length === 0) {
+            numberBuffer = '0';
+        }
+
+        switch (keyVal) {
+            case 'cube':
+                result = parseFloat(numberBuffer) ** 3;
+                break;
+
+            case '!':
+                // NEED to handle -ve and fractions
+                result = 1;
+                for (let i = parseFloat(numberBuffer); i >= 1; i--) {
+                    result *= i;
+                }
+                break;
+
+            case 'sqrt':
+                // NEED to Handle negative numbers
+                result = Math.sqrt(parseFloat(numberBuffer));
+                break;
+
+            case 'sq':
+                result = parseFloat(numberBuffer) ** 2;
+                break;
+
+            case 'reci':
+                // NEED TO handle divide by 0
+                result = 1 / parseFloat(numberBuffer);
+                break;
+
+            default:
+                console.log('ERROR! Invalid Uninary operator found:', keyVal);
+                break;
+        }
+
+        // upto 8 decimal places only
+        result = Math.round(result * decimalPrecision) / decimalPrecision;
+
+        console.log('result: ', result);
+        console.log('numberBuffer', numberBuffer);
+
+        // display the result implicitly on to the screen
+        numberBuffer = result.toString();
+        displayBuffer();
+
+
+    });
+});
+
