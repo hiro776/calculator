@@ -1,5 +1,7 @@
 /* Calculator UI Styles */
 
+/* Made specifically for this app. */
+
 /* Author: Rohit Mehta */
 
 /* Roboto Mono Bold 700 */
@@ -8,19 +10,16 @@
 /* --- */
 
 :root {
-    --body-bg-color: #292d30;
-    --calc-bg-color: #464a4b;
+    --bg-color: #292d30;
+    --calc-color: #464a4b;
     --key-color: #393a3e;
-    --btn-calc-shadow: rgba(0, 0, 0, 0.5);
-    --btn-shadow-2: rgba(255, 255, 255, 0.5);
-    --equal-color: #9C2EF3;
-    --ckey-color: #fdb82d;
-    --sp-color: #4b443a;
-    --op-color: #49345d;
-    --font-color: rgb(254,254,254);
+    --shadow-1: rgba(0, 0, 0, 0.5);
+    --shadow-2: rgba(255, 255, 255, 0.5);
+    --equal-key-color: #9C2EF3;
+    --clear-key-color: #fdb82d;
+    --op-key-color: #49345d;
+    --default-font-color: rgb(233, 233, 233);
     --op-font-color: #ac77dd;
-    --sp-font-color: #c0ac90;
-    --display-font-color: rgb(233, 233, 233);
 }
 
 * {
@@ -29,7 +28,7 @@
 
 body {
     position: relative;
-    background-color: var(--body-bg-color);
+    background-color: var(--bg-color);
     font-family: 'Roboto Mono', monospace;
     font: 18pt;
 }
@@ -40,101 +39,110 @@ body {
     display: flex;
     flex-direction: column;
     margin: auto;
-    padding: .85rem;
-    justify-content: space-between;
+    padding: .5rem;
+    justify-content: center;
     align-items: center;
-    background-color: var(--calc-bg-color);
-    box-shadow: 6px 6px 12px var(--btn-calc-shadow), -10px -10px 30px var(--btn-calc-shadow) inset;
-    border: 1px solid var(--calc-bg-color);
+    background-color: var(--calc-color);
+    box-shadow: 6px 6px 12px var(--shadow-1), -10px -10px 30px var(--shadow-1) inset;
+    border: 1px solid var(--calc-color);
     border-radius: 30px;
-    height: 660px;
-    width: 95vw;
-    max-width: 400px;
+    height: 600px;
+    width: auto;
+    max-width: 350px;
 }
 
 /* calculator display */
 
-.calculator .display {
+.display {
     width: 98%;
-    height: 164px;
+    /* height: 164px; */
     text-align: right;
-    vertical-align:middle;
-    color: var(--display-font-color);
+    vertical-align: middle;
+    color: var(--default-font-color);
 }
 
-.calculator .display > .previous-result {
-    width: 100%;
-    height: 45px;
-    padding: 1rem 1rem;
-    font-size: 1rem;
-    opacity: 0.5;
-}
-
-.calculator .display > .current-result {
+.result {
     width: 100%;
     height: 119px;
     padding: 1rem 1rem;
-    font-size: 2rem;
+    font-size: 1.7rem;
     overflow-x: auto;
 }
 
 /* keys */
 
-.calculator .keys {
+.keys {
     display: grid;
     grid-gap: 16px;
     gap: 16px;
     grid-template-columns: repeat(4, minmax(64px, 1fr));
     height: 374px;
-    width: 98%;
+    /* width: 98%; */
 }
 
-.calculator .keys > button {
-    color: var(--font-color);
-    width: 64px;
+button {
+    color: var(--default-font-color);
+    /* width: 64px; */
     /* height: 49px; */
     font-size: 110%;
     border: 0;
     border-radius: 30px;
-    box-shadow: 2px 3px 4px var(--btn-calc-shadow), 2px 1px 4px var(--btn-shadow-2) inset;
+    box-shadow: 2px 3px 4px var(--shadow-1), 2px 1px 4px var(--shadow-2) inset;
     transition: box-shadow 0.25s ease;
 }
 
-.calculator .keys > button:active {
+button:active {
     box-shadow: none;
 }
 
 /* number keys */
 
-.keys > .num {
+.num {
     background-color: var(--key-color);
 }
 
 /* clear key */
-.keys > .c {
-    background-color: var(--ckey-color);
-    font-weight: bolder;
-    font-size: 120%;
+
+.c {
+    background-color: var(--clear-key-color);
+    /* font-weight: bolder; */
+    /* font-size: 120%; */
+    grid-column: 1 / 3;
 }
 
-/* special operations key */
-.keys > button.sp {
+/* delete key */
+
+button[data-key="del"] {
     background-color: var(--sp-color);
-    color: var(--sp-font-color);
+    grid-column: 3 / 5;
 }
 
 /* operations key */
-.keys > button.op {
-    background-color: var(--op-color);
+
+button.op {
+    background-color: var(--op-key-color);
     color: var(--op-font-color);
+}
+
+/* plus key */
+
+button[data-key="+"] {
+    grid-row: 3 / 5;
+    grid-column: 4 / 5;
+}
+
+/* zero key */
+
+button[data-key="0"] {
+    grid-column: 1 / 3;
 }
 
 /* Equal key */
 
-.keys > .eq {
-    background-color: var(--equal-color);
-    grid-row: 5 / 7;
-    grid-column: 4 / auto;
+.eq {
+    background-color: var(--equal-key-color);
     font-weight: bolder;
-    font-size: 180%;
+    /* font-size: 180%; */
+    grid-column: 4 / 5;
+    grid-row: 5 / 7;
 }
