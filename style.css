@@ -112,8 +112,8 @@ button:active {
 
 /* delete key */
 
-button[data-key="del"] {
-    background-color: var(--sp-color);
+button[data-key="Backspace"] {
+    background-color: var(--key-color);
     grid-column: 3 / 5;
 }
 
