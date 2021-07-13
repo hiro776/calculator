@@ -146,3 +146,9 @@ button[data-key="0"] {
     grid-column: 4 / 5;
     grid-row: 5 / 7;
 }
+
+/* light the keys when user presses on them */
+
+button:active {
+    background: radial-gradient(var(--key-color), var(--op-font-color), var(--clear-key-color));
+}
