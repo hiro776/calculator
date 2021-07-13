@@ -5,31 +5,20 @@
 //
 
 
-/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
- * LOOK HERE. NOTE ---------------------------
- 
-  Your calculator should not evaluate more than a single 
-  pair of numbers at a time. If you enter a number then an 
-  operator and another number that calculation should be 
-  displayed if your next input is an operator. The result 
-  of the calculation should be used as the first number in
-  your new calculation.
-  
-  *--------------------------------------------
-  *<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-
-
-
 let result = 0;
 let curOP = '';
 
 // * and x both means multiply op
-const opKeys = ['+', '-', 'x', '*', '/', '^'];
+const opKeys = '+-x*/^';
+const numKeys = '.0123456789';
 
 const display = document.querySelector('.result');
 let displayBuffer = '';
-const showBuffer = () => {
-  display.textContent = displayBuffer;
+const showBuffer = (clean = false) => {
+  if (clean)
+    display.textContent = 0;
+  else
+    display.textContent = displayBuffer;
 }
 
 
@@ -66,7 +55,7 @@ const operate = function (op, num1, num2) {
       break;
 
     case '/':
-      if (num2 === 0) return raiseError('Divide By Zero');
+      if (num2 === 0) return raiseError('Error: Divide By Zero');
       else result = num1 / num2;
       break;
 
@@ -84,26 +73,28 @@ const operate = function (op, num1, num2) {
 }
 
 const clear = function () {
-  displayBuffer = 0;
-  showBuffer();
-  displayBuffer = 0;
+  displayBuffer = '';
   result = 0;
   curOP = '';
+  showBuffer(clean = true);
 }
 
 const handleKey = (key) => {
-
+  console.log('key recieved: ', key);
   // Handling Number Keys (input of negative numbers not supported Yet)
-  if (key >= '0' && key <= '9' || key === '.') {
+  if (numKeys.indexOf(key) !== -1) {
     if (displayBuffer === '' && key !== '0') { // this is the first operand
-      displayBuffer += key === '.' ? '0' + key.toString() : key.toString();
+      displayBuffer = key === '.' ? '0' + key.toString() : key.toString();
     }
+
+    else if (displayBuffer === '' && key === '0') return;
+
     else {
       if (key === '.' && displayBuffer.indexOf('.') === -1) {
         displayBuffer += key;
       }
       else if (key !== '.') {
-        displayBuffer += key.toString();
+        displayBuffer += key;
       }
     }
 
@@ -113,7 +104,6 @@ const handleKey = (key) => {
 
   // operation keys
   else if (opKeys.indexOf(key) !== -1) {
-    console.log(key);
 
     const tempNum = parseFloat(displayBuffer);
     if (isNaN(tempNum)) { // user pressed op twice in a row
@@ -144,15 +134,13 @@ const handleKey = (key) => {
 
   // delete key
   else if (key === 'Backspace') {
-    if (displayBuffer === '') {
-      displayBuffer = 0;
-      showBuffer();
-      displayBuffer = '';
-    }
-    else {
+    if (displayBuffer !== '') {
       displayBuffer = displayBuffer.slice(0, displayBuffer.length - 1);
-      showBuffer();
+
+      if (displayBuffer === '') showBuffer(clean = true);
+      else showBuffer();
     }
+    else showBuffer(clean = true);
   }
 
   // equal to key
@@ -169,12 +157,13 @@ const handleKey = (key) => {
   }
 
   // clear key (on screen key only)
-  else if (key === 'clear') {
+  else if (key === 'c') {
     clear();
   }
 
   else {
-    console.log('Unknown Key is Detected (most probably keyboard input)', { key, curOP, result, displayBuffer });
+    console.log('Unknown Key is Detected !', { key });
+    console.table({displayBuffer, result, curOP});
   }
 }
 
@@ -184,14 +173,8 @@ keys.forEach(key => {
   key.addEventListener('click', e => handleKey(e.target.getAttribute('data-key')));
 });
 
-
+// support key board buttons
 window.addEventListener('keyup', e => {
   const key = e.key;
-
   handleKey(key);
-
-  // console.log(key);
-  // console.log('result', result);
-  // console.log('displayBuffer', displayBuffer);
-
 });
